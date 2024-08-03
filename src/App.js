@@ -5,6 +5,7 @@ import UserPage from './pages/UserPage';
 import VotedAlbumsPage from './pages/VotedAlbumsPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import NotFound from './pages/NotFound'; // Import the NotFound component
 import './App.css';
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/voted-albums" element={<VotedAlbumsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
         </Routes>
       </div>
     </Router>
@@ -24,3 +26,4 @@ const App = () => {
 };
 
 export default App;
+

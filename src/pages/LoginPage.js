@@ -1,41 +1,52 @@
-// src/pages/LoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); 
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Handle login logic
+    setError(''); 
     try {
-      await axios.post('/api/login', { email, password }); // Adjust the endpoint as needed
-      // Handle successful login (e.g., redirect or show a message)
+      const result = await axios.post('/login', { username, password }); 
+      localStorage.setItem('token', result.data.token);
+      localStorage.setItem('user', username);
+      navigate('/voted-albums');
     } catch (error) {
       console.error('Error during login:', error);
-      // Handle error (e.g., show an error message)
+      setError('Invalid username or password.'); 
     }
   };
 
   return (
     <div>
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
+      <form onSubmit={handleLogin} autoComplete="off"> 
+        <div>
+          <input
+            type="text" 
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            required
+            autoComplete="off" 
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+            autoComplete="off" 
+          />
+          {error && <p style={{ color: 'red', fontSize: '0.8em' }}>{error}</p>} 
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
@@ -43,3 +54,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+

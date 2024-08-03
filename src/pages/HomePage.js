@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
       <div>
-          <h1>Your Voted Albums</h1>
+          <h1>AOTY 2024 Rankings</h1>
           {votedAlbums.map(album => (
               <div key={album.id}>
                   <h1>{album.name}</h1>

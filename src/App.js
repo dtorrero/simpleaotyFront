@@ -5,20 +5,22 @@ import UserPage from './pages/UserPage';
 import VotedAlbumsPage from './pages/VotedAlbumsPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import NotFound from './pages/NotFound'; // Import the NotFound component
+import NotFound from './pages/NotFound'; 
+import Header from './components/Header';
 import './App.css';
 
 const App = () => {
   return (
     <Router>
       <div className="App">
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/voted-albums" element={<VotedAlbumsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="*" element={<NotFound />} /> {/* Catch-all route for 404 */}
+          <Route path="*" element={<NotFound />} /> 
         </Routes>
       </div>
     </Router>

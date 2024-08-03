@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+// This needs to be USER VOTED ALBUMS
 const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
 

@@ -5,13 +5,14 @@ const HomePage = () => {
   const [votedAlbums, setVotedAlbums] = useState([]);
 
   useEffect(() => {
-      // Fetch voted albums from the backend
+      
       const fetchVotedAlbums = async () => {
-          const response = await axios.get('/local/albums'); // Adjust the endpoint as needed
-          setVotedAlbums(response.data);
+          const response = await axios.get('/local/albums'); 
+          // Ordenar por votos
+          const sortedAlbums = response.data.sort((a, b) => b.votes - a.votes);
+          setVotedAlbums(sortedAlbums);
       };
       fetchVotedAlbums();
-      console.log(votedAlbums);
   }, []);
 
   return (
@@ -34,3 +35,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

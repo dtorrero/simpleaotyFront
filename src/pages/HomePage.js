@@ -7,7 +7,7 @@ const HomePage = () => {
   useEffect(() => {
       // Fetch voted albums from the backend
       const fetchVotedAlbums = async () => {
-          const response = await axios.get('/albums'); // Adjust the endpoint as needed
+          const response = await axios.get('/local/albums'); // Adjust the endpoint as needed
           setVotedAlbums(response.data);
       };
       fetchVotedAlbums();

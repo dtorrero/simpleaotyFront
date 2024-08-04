@@ -12,7 +12,7 @@ const LoginPage = () => {
     e.preventDefault();
     setError(''); 
     try {
-      const result = await axios.post('/login', { username, password }); 
+      const result = await axios.post('/local/login', { username, password }); 
       localStorage.setItem('token', result.data.token);
       localStorage.setItem('user', username);
       navigate('/voted-albums');

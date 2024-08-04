@@ -4,13 +4,15 @@ import axios from 'axios';
 const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState([]);
+    const [search, setSearch] = useState('');
     const username = localStorage.getItem('user');
 
+ 
     useEffect(() => {
         const fetchVotedAlbums = async () => {
             try {
-                const response = await axios.get(`/votes/${username}`);
-                
+                const response = await axios.get(`/local/votes/${username}`);
+
                 // Transform the response object into an array of album objects
                 const albumsArray = Object.keys(response.data).map(key => ({
                     name: key, // Album name
@@ -21,7 +23,7 @@ const VotedAlbumsPage = () => {
 
                 // Fetch album details for each album ID
                 const detailsPromises = albumsArray.map(album =>
-                    axios.get(`/albums/${album.id}`)
+                    axios.get(`/local/albums/${album.id}`)
                 );
 
                 const detailsResponses = await Promise.all(detailsPromises);
@@ -41,6 +43,13 @@ const VotedAlbumsPage = () => {
 
     return (
         <div>
+            <div>
+                <input
+                    type="text"
+                    value={search}
+                    placeholder="Search"
+                />
+            </div>
             <h1>Your Voted Albums</h1>
             {votedAlbums.length > 0 ? (
                 votedAlbums.map((album, index) => {

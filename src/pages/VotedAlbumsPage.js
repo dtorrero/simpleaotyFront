@@ -5,11 +5,12 @@ const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState([]);
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true); // New loading state
     const username = localStorage.getItem('user');
 
- 
     useEffect(() => {
         const fetchVotedAlbums = async () => {
+            setLoading(true); // Set loading to true before fetching
             try {
                 const response = await axios.get(`/local/votes/${username}`);
 
@@ -34,6 +35,8 @@ const VotedAlbumsPage = () => {
                 console.error('Error fetching voted albums:', error);
                 setVotedAlbums([]); // Reset to an empty array on error
                 setAlbumDetails([]); // Reset album details on error
+            } finally {
+                setLoading(false); // Set loading to false after fetching
             }
         };
 
@@ -44,14 +47,14 @@ const VotedAlbumsPage = () => {
 
     return (
         <div>
-           
             <h1>Your Voted Albums</h1>
-            {votedAlbums.length > 0 ? (
+            {loading ? ( // Check if loading
+                <p>Loading...</p> // Display loading message or animation
+            ) : votedAlbums.length > 0 ? (
                 votedAlbums.map((album, index) => {
                     const details = albumDetails[index]; // Get corresponding album details
                     return (
                         <div key={album.id}>
-                            {/* <h1>{album.name}</h1> */}
                             {details && (
                                 <>
                                     <h1>{details.band}</h1>
@@ -74,4 +77,3 @@ const VotedAlbumsPage = () => {
 };
 
 export default VotedAlbumsPage;
-

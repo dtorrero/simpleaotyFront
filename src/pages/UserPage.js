@@ -1,34 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-const UserPage = () => {
+const AlbumSearch = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [albums, setAlbums] = useState([]);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
 
-  useEffect(() => {
-    // Fetch albums from the backend
-    const fetchAlbums = async () => {
-      const response = await axios.get('/api/albums'); // Adjust the endpoint as needed
-      setAlbums(response.data);
-    };
-    fetchAlbums();
-  }, []);
-
-  const handleVote = async (albumId) => {
-    // Handle voting logic
-    await axios.post('/api/vote', { albumId }); // Adjust the endpoint as needed
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/metalApi/search/albums/title/${searchTerm}`);
+      setAlbums(response.data.slice(0, 10)); // Get the first 10 results
+    } catch (error) {
+      console.error('Error fetching albums:', error);
+    }
   };
+
+  const handleAddAlbum = async (album) => {
+    const username = localStorage.getItem('user'); // Extract username from local storage
+    if (!username) {
+        alert('User not found');
+        return;
+    }
+
+    const albumData = {
+        album: parseInt(album.id, 10), // Convert Album ID to integer
+        bandId: parseInt(album.band.id, 10) // Convert Band ID to integer
+    };
+    console.log(albumData);
+    try {
+        await axios.post(`/local/users/${username}/albums`, albumData);
+        setConfirmationMessage('Album has been added to your collection!');
+        setAlbums([]); // Reset the search results
+        setSearchTerm(''); // Clear the search input
+    } catch (error) {
+        console.error('Error adding album:', error);
+    }
+};
+
 
   return (
     <div>
-      <h1>Vote for Your Favorite Albums</h1>
-      {albums.map(album => (
-        <div key={album.id}>
-          <h2>{album.title}</h2>
-          <button onClick={() => handleVote(album.id)}>Vote</button>
-        </div>
-      ))}
+      <h1>Album Search</h1>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search for albums..."
+      />
+      <button onClick={handleSearch}>Search</button>
+
+      {confirmationMessage && <p>{confirmationMessage}</p>}
+
+      <ul>
+        {albums.map((album) => (
+          <li key={album.id}>
+            {album.title} by {album.band.name}
+            <button onClick={() => handleAddAlbum(album)}>Add</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default UserPage;
+export default AlbumSearch;

@@ -29,6 +29,7 @@ const VotedAlbumsPage = () => {
                 const detailsResponses = await Promise.all(detailsPromises);
                 const detailsData = detailsResponses.map(res => res.data);
                 setAlbumDetails(detailsData);
+                
             } catch (error) {
                 console.error('Error fetching voted albums:', error);
                 setVotedAlbums([]); // Reset to an empty array on error
@@ -43,27 +44,22 @@ const VotedAlbumsPage = () => {
 
     return (
         <div>
-            <div>
-                <input
-                    type="text"
-                    value={search}
-                    placeholder="Search"
-                />
-            </div>
+           
             <h1>Your Voted Albums</h1>
             {votedAlbums.length > 0 ? (
                 votedAlbums.map((album, index) => {
                     const details = albumDetails[index]; // Get corresponding album details
                     return (
                         <div key={album.id}>
-                            <h1>{album.name}</h1>
+                            {/* <h1>{album.name}</h1> */}
                             {details && (
                                 <>
-                                    <h2>Band: {details.band}</h2>
-                                    <h2>Genre: {details.genre}</h2>
-                                    <h2>Release Date: {details.releaseDate}</h2>
-                                    <h2>Type: {details.type}</h2>
-                                    <h2>Link: <a href={details.linkURL}>{details.linkURL}</a></h2>
+                                    <h1>{details.band}</h1>
+                                    <h2>{details.name}</h2>
+                                    <h3>{details.genre}</h3>
+                                    <h3>{details.releaseDate}</h3>
+                                    <h3>{details.type}</h3>
+                                    <h4><a href={details.linkURL}>{details.linkURL}</a></h4>
                                     <img src={details.coverURL} alt="Album Cover" />
                                 </>
                             )}

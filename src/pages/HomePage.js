@@ -41,7 +41,6 @@ const HomePage = () => {
                             position: 'relative'
                         }}
                     >
-                        
                         <div 
                             style={{ 
                                 position: 'absolute', 
@@ -55,7 +54,20 @@ const HomePage = () => {
                             {index + 1}
                         </div>
                         {isCompact ? (
-                            <h1 style={{ fontSize: '16px', margin: '5px 0' }}>{album.band} - {album.name}</h1> // Compact 
+                            <>
+                                <h1 style={{ fontSize: '16px', margin: '5px 0', display: 'inline-block' }}>
+                                    {album.band} - {album.name}
+                                </h1>
+                                <div style={{ 
+                                    position: 'absolute', 
+                                    top: '10px', 
+                                    right: '10px', 
+                                    fontSize: '16px', 
+                                    color: 'white' 
+                                }}>
+                                    Votes: {album.votes}
+                                </div>
+                            </>
                         ) : (
                             <>
                                 <h1>{album.name}</h1>
@@ -64,7 +76,7 @@ const HomePage = () => {
                                 <h2>{album.releaseDate}</h2>
                                 <h2>Type: {album.type}</h2>
                                 <h2>Metal archive: <a href={album.linkURL} style={{ color: 'lightblue' }}>{album.linkURL}</a></h2>
-                                <h2>Voted: {album.votes} times</h2>
+                                <h2>Votes: {album.votes} times</h2>
                                 <img 
                                     src={album.coverURL} 
                                     alt="Album Cover" 

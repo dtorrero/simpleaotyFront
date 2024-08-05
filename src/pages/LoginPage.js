@@ -23,7 +23,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', padding: '20px' }}>
       <h1>Login</h1>
       <form onSubmit={handleLogin} autoComplete="off">
         <div>
@@ -34,6 +34,14 @@ const LoginPage = () => {
             placeholder="Username"
             required
             autoComplete="off"
+            style={{
+              backgroundColor: 'black',
+              color: 'white',
+              border: '1px solid white',
+              outline: 'none', // Remove default outline
+            }}
+            onFocus={(e) => e.target.style.backgroundColor = 'black'}
+            onBlur={(e) => e.target.style.backgroundColor = 'black'}
           />
         </div>
         <div>
@@ -44,15 +52,21 @@ const LoginPage = () => {
             placeholder="Password"
             required
             autoComplete="off"
+            style={{
+              backgroundColor: 'black',
+              color: 'white',
+              border: '1px solid white',
+              outline: 'none', // Remove default outline
+            }}
+            onFocus={(e) => e.target.style.backgroundColor = 'black'}
+            onBlur={(e) => e.target.style.backgroundColor = 'black'}
           />
           {error && <p style={{ color: 'red', fontSize: '0.8em' }}>{error}</p>}
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" style={{ backgroundColor: 'white', color: 'black' }}>Login</button>
       </form>
     </div>
   );
 };
 
 export default LoginPage;
-
-

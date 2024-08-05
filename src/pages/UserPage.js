@@ -5,11 +5,11 @@ const AlbumSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [albums, setAlbums] = useState([]);
   const [confirmationMessage, setConfirmationMessage] = useState('');
-  const [allInUse, setAllInUse] = useState(false); // State to track if all slots are in use
+  const [allInUse, setAllInUse] = useState(false);
 
   useEffect(() => {
     const checkSlots = async () => {
-      const username = localStorage.getItem('user'); // Extract username from local storage
+      const username = localStorage.getItem('user');
       if (!username) {
         alert('User not found');
         return;
@@ -17,57 +17,56 @@ const AlbumSearch = () => {
 
       try {
         const response = await axios.get(`/local/freeslots/${username}`);
-        setAllInUse(response.data.allInUse); // Set the state based on the API response
+        setAllInUse(response.data.allInUse);
       } catch (error) {
         console.error('Error checking slots:', error);
       }
     };
 
-    checkSlots(); // Call the function to check slots on component mount
-  }, []); // Empty dependency array to run only once on mount
+    checkSlots();
+  }, []);
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(`/metalApi/search/albums/title/${searchTerm}`);
-      setAlbums(response.data.slice(0, 10)); // Get the first 10 results
+      setAlbums(response.data.slice(0, 10));
     } catch (error) {
       console.error('Error fetching albums:', error);
     }
   };
 
   const handleAddAlbum = async (album) => {
-    const username = localStorage.getItem('user'); // Extract username from local storage
+    const username = localStorage.getItem('user');
     if (!username) {
       alert('User not found');
       return;
     }
 
-    // Check if the user has already voted for 10 albums
     if (allInUse) {
       setConfirmationMessage(`You have already voted for 10 albums`);
-      return; // Exit if all slots are in use
+      return;
     }
 
     const albumData = {
-      album: parseInt(album.id, 10), // Convert Album ID to integer
-      bandId: parseInt(album.band.id, 10) // Convert Band ID to integer
+      album: parseInt(album.id, 10),
+      bandId: parseInt(album.band.id, 10)
     };
     console.log(albumData);
     try {
       await axios.post(`/local/users/${username}/albums`, albumData);
       setConfirmationMessage('Album has been added to your collection!');
-      setAlbums([]); // Reset the search results
-      setSearchTerm(''); // Clear the search input
+      setAlbums([]);
+      setSearchTerm('');
     } catch (error) {
       console.error('Error adding album:', error);
     }
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'black', color: 'white', padding: '20px', minHeight: '100vh' }}>
       <h1>Album Search</h1>
       {allInUse ? (
-        <p>You have already voted for 10 albums</p> // Display message if all slots are in use
+        <p>You have already voted for 10 albums</p>
       ) : (
         <>
           <input
@@ -75,8 +74,9 @@ const AlbumSearch = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search for albums..."
+            style={{ backgroundColor: 'black', color: 'white', border: '1px solid white', padding: '5px' }}
           />
-          <button onClick={handleSearch}>Search</button>
+          <button onClick={handleSearch} style={{ marginLeft: '10px', backgroundColor: 'black', color: 'white', border: '1px solid white' }}>Search</button>
         </>
       )}
 
@@ -86,7 +86,7 @@ const AlbumSearch = () => {
         {albums.map((album) => (
           <li key={album.id}>
             {album.title} by {album.band.name}
-            <button onClick={() => handleAddAlbum(album)}>Add</button>
+            <button onClick={() => handleAddAlbum(album)} style={{ marginLeft: '10px', backgroundColor: 'black', color: 'white', border: '1px solid white' }}>Add</button>
           </li>
         ))}
       </ul>

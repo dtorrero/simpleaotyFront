@@ -1,21 +1,37 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    console.log('Checking auth state:', { user, token }); // Debugging log
+    if (user && token) {
+      setIsLoggedIn(true);
+    }
+    setLoading(false); // Set loading to false after checking
+  }, []);
 
   const login = (username) => {
     localStorage.setItem('user', username);
     setIsLoggedIn(true);
-    console.log("Logged In")
+    console.log("Logged In");
   };
 
   const logout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    console.log("Logged Out")
+    console.log("Logged Out");
   };
+
+  // Prevent rendering children until loading is complete
+  if (loading) {
+    return <div>Loading...</div>; // You can customize this loading indicator
+  }
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
@@ -27,3 +43,4 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+

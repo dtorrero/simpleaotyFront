@@ -18,8 +18,16 @@ const HomePage = () => {
         setIsCompact(prevState => !prevState); // Toggle view state
     };
 
+    // Add global styles for the body and html
+    useEffect(() => {
+        document.body.style.backgroundColor = 'black';
+        document.body.style.margin = '0'; // Remove default margin
+        document.body.style.color = 'white'; // Set default text color
+        document.documentElement.style.height = '100%'; // Ensure full height
+    }, []);
+
     return (
-        <div style={{ backgroundColor: 'black', color: 'white', padding: '20px' }}>
+        <div style={{ padding: '20px' }}>
             <h1>AOTY 2024 Rankings</h1>
             <button onClick={toggleCompactView} style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                 {isCompact ? 'Show Full List' : 'Show Compact List'}

@@ -27,6 +27,7 @@ const AlbumSearch = () => {
   }, []);
 
   const handleSearch = async () => {
+    if (!searchTerm) return; // Not empty
     try {
       const response = await axios.get(`/metalApi/search/albums/title/${searchTerm}`);
       setAlbums(response.data.slice(0, 10));
@@ -62,6 +63,12 @@ const AlbumSearch = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div style={{ backgroundColor: 'black', color: 'white', padding: '20px', minHeight: '100vh' }}>
       <h1>Album Search</h1>
@@ -73,6 +80,7 @@ const AlbumSearch = () => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown} 
             placeholder="Search for albums..."
             style={{ backgroundColor: 'black', color: 'white', border: '1px solid white', padding: '5px' }}
           />

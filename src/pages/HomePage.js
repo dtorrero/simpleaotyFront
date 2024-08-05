@@ -56,7 +56,14 @@ const HomePage = () => {
                         {isCompact ? (
                             <>
                                 <h1 style={{ fontSize: '16px', margin: '5px 0', display: 'inline-block' }}>
-                                    {album.band} - {album.name}
+                                    <a 
+                                        href={album.linkURL} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        style={{ color: 'lightblue', textDecoration: 'none' }}
+                                    >
+                                        {album.band} - {album.name}
+                                    </a>
                                 </h1>
                                 <div style={{ 
                                     position: 'absolute', 
@@ -70,12 +77,30 @@ const HomePage = () => {
                             </>
                         ) : (
                             <>
-                                <h1>{album.name}</h1>
+                                <h1>
+                                    <a 
+                                        href={album.linkURL} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        style={{ color: 'white', textDecoration: 'none' }}
+                                    >
+                                        {album.name}
+                                    </a>
+                                </h1>
                                 <h2>{album.band}</h2>
                                 <h2>{album.genre}</h2>
                                 <h2>{album.releaseDate}</h2>
                                 <h2>Type: {album.type}</h2>
-                                <h2>Metal archive: <a href={album.linkURL} style={{ color: 'lightblue' }}>{album.linkURL}</a></h2>
+                                <h2>Metal archive: 
+                                    <a 
+                                        href={album.linkURL} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        style={{ color: 'lightblue' }}
+                                    >
+                                        {album.linkURL}
+                                    </a>
+                                </h2>
                                 <h2>Votes: {album.votes} times</h2>
                                 <img 
                                     src={album.coverURL} 

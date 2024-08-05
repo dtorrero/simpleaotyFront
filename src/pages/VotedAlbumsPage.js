@@ -89,18 +89,45 @@ const VotedAlbumsPage = () => {
                                         {isCompact ? (
                                             <div style={{ fontSize: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <div>
-                                                    <p style={{ fontWeight: 'bold' }}>{details.band} - {details.name}</p>
+                                                    <p style={{ fontWeight: 'bold' }}>
+                                                        <a 
+                                                            href={details.linkURL} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer" 
+                                                            style={{ color: 'lightblue', textDecoration: 'none' }}
+                                                        >
+                                                            {details.band} - {details.name}
+                                                        </a>
+                                                    </p>
                                                 </div>
                                                 <button onClick={() => removeAlbum(album.id)} style={{ padding: '5px 10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Remove</button>
                                             </div>
                                         ) : (
                                             <>
                                                 <h1>{details.band}</h1>
-                                                <h2>{details.name}</h2>
+                                                <h2>
+                                                    <a 
+                                                        href={details.linkURL} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer" 
+                                                        style={{ color: 'white', textDecoration: 'none' }}
+                                                    >
+                                                        {details.name}
+                                                    </a>
+                                                </h2>
                                                 <h3>{details.genre}</h3>
                                                 <h3>{details.releaseDate}</h3>
                                                 <h3>{details.type}</h3>
-                                                <h4><a href={details.linkURL} style={{ color: 'white' }}>{details.linkURL}</a></h4>
+                                                <h4>
+                                                    <a 
+                                                        href={details.linkURL} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer" 
+                                                        style={{ color: 'white' }}
+                                                    >
+                                                        {details.linkURL}
+                                                    </a>
+                                                </h4>
                                                 <img 
                                                     src={details.coverURL} 
                                                     alt="Album Cover" 

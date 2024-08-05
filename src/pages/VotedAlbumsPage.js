@@ -54,7 +54,7 @@ const VotedAlbumsPage = () => {
 
     return (
         <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', padding: '20px' }}>
-            <h1>Your Voted Albums</h1>
+            <h1>Your Voted Albums ({votedAlbums.length} / 10)</h1>
             <button 
                 onClick={() => setIsCompact(prev => !prev)}
                 style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}

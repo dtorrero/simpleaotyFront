@@ -5,6 +5,7 @@ const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isCompact, setIsCompact] = useState(false); // New state for compact view
     const username = localStorage.getItem('user');
 
     useEffect(() => {
@@ -54,6 +55,12 @@ const VotedAlbumsPage = () => {
     return (
         <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', padding: '20px' }}>
             <h1>Your Voted Albums</h1>
+            <button 
+                onClick={() => setIsCompact(prev => !prev)}
+                style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+            >
+                {isCompact ? 'Show Full List' : 'Compact List'}
+            </button>
             {loading ? (
                 <p>Loading...</p>
             ) : votedAlbums.length > 0 ? (
@@ -79,20 +86,31 @@ const VotedAlbumsPage = () => {
                             >
                                 {details && (
                                     <>
-                                        <h1>{details.band}</h1>
-                                        <h2>{details.name}</h2>
-                                        <h3>{details.genre}</h3>
-                                        <h3>{details.releaseDate}</h3>
-                                        <h3>{details.type}</h3>
-                                        <h4><a href={details.linkURL} style={{ color: 'white' }}>{details.linkURL}</a></h4>
-                                        <img 
-                                            src={details.coverURL} 
-                                            alt="Album Cover" 
-                                            style={{ maxWidth: '200px', maxHeight: '200px' }} 
-                                        />
-                                        <div>
-                                            <button onClick={() => removeAlbum(album.id)}>Remove</button>
-                                        </div>
+                                        {isCompact ? (
+                                            <div style={{ fontSize: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <div>
+                                                    <p style={{ fontWeight: 'bold' }}>{details.band} - {details.name}</p>
+                                                </div>
+                                                <button onClick={() => removeAlbum(album.id)} style={{ padding: '5px 10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Remove</button>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <h1>{details.band}</h1>
+                                                <h2>{details.name}</h2>
+                                                <h3>{details.genre}</h3>
+                                                <h3>{details.releaseDate}</h3>
+                                                <h3>{details.type}</h3>
+                                                <h4><a href={details.linkURL} style={{ color: 'white' }}>{details.linkURL}</a></h4>
+                                                <img 
+                                                    src={details.coverURL} 
+                                                    alt="Album Cover" 
+                                                    style={{ maxWidth: '200px', maxHeight: '200px' }} 
+                                                />
+                                                <div>
+                                                    <button onClick={() => removeAlbum(album.id)} style={{ marginTop: '10px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Remove</button>
+                                                </div>
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>

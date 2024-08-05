@@ -8,13 +8,13 @@ const Header = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">AOTY2024</Link>
           </li>
           <li>
-            <Link to="/user">User</Link>
+            <Link to="/user">Vote!</Link>
           </li>
           <li>
-            <Link to="/voted-albums">Voted Albums</Link>
+            <Link to="/voted-albums">MyAlbums</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>

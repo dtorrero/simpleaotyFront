@@ -4,25 +4,22 @@ import axios from 'axios';
 const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState([]);
-    const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(true); // New loading state
+    
+    const [loading, setLoading] = useState(true);
     const username = localStorage.getItem('user');
 
     useEffect(() => {
         const fetchVotedAlbums = async () => {
-            setLoading(true); // Set loading to true before fetching
+            setLoading(true);
             try {
                 const response = await axios.get(`/local/votes/${username}`);
-
-                // Transform the response object into an array of album objects
                 const albumsArray = Object.keys(response.data).map(key => ({
-                    name: key, // Album name
-                    id: response.data[key], // Album ID
+                    name: key,
+                    id: response.data[key],
                 }));
 
                 setVotedAlbums(albumsArray);
 
-                // Fetch album details for each album ID
                 const detailsPromises = albumsArray.map(album =>
                     axios.get(`/local/albums/${album.id}`)
                 );
@@ -33,10 +30,10 @@ const VotedAlbumsPage = () => {
                 
             } catch (error) {
                 console.error('Error fetching voted albums:', error);
-                setVotedAlbums([]); // Reset to an empty array on error
-                setAlbumDetails([]); // Reset album details on error
+                setVotedAlbums([]);
+                setAlbumDetails([]);
             } finally {
-                setLoading(false); // Set loading to false after fetching
+                setLoading(false);
             }
         };
 
@@ -45,14 +42,25 @@ const VotedAlbumsPage = () => {
         }
     }, [username]);
 
+    const removeAlbum = async (albumId) => {
+        try {
+            await axios.delete(`/local/users/${username}/albums/${albumId}`);
+            // Update the state to remove the album from the UI
+            setVotedAlbums(prevAlbums => prevAlbums.filter(album => album.id !== albumId));
+            setAlbumDetails(prevDetails => prevDetails.filter((_, index) => votedAlbums[index].id !== albumId));
+        } catch (error) {
+            console.error('Error removing album:', error);
+        }
+    };
+
     return (
         <div>
             <h1>Your Voted Albums</h1>
-            {loading ? ( // Check if loading
-                <p>Loading...</p> // Display loading message or animation
+            {loading ? (
+                <p>Loading...</p>
             ) : votedAlbums.length > 0 ? (
                 votedAlbums.map((album, index) => {
-                    const details = albumDetails[index]; // Get corresponding album details
+                    const details = albumDetails[index];
                     return (
                         <div key={album.id}>
                             {details && (
@@ -64,6 +72,7 @@ const VotedAlbumsPage = () => {
                                     <h3>{details.type}</h3>
                                     <h4><a href={details.linkURL}>{details.linkURL}</a></h4>
                                     <img src={details.coverURL} alt="Album Cover" />
+                                    <button onClick={() => removeAlbum(album.id)}>Remove</button>
                                 </>
                             )}
                         </div>

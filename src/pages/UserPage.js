@@ -10,23 +10,23 @@ const AlbumSearch = () => {
   const [loading, setLoading] = useState(false); // Loading state for search
   const [addingLoading, setAddingLoading] = useState({}); // Loading state for adding albums
 
+  const checkSlots = async () => {
+    const username = localStorage.getItem('user');
+    if (!username) {
+      alert('User not found');
+      return;
+    }
+
+    try {
+      const response = await axios.get(`/local/freeslots/${username}`);
+      setAllInUse(response.data.allInUse);
+    } catch (error) {
+      console.error('Error checking slots:', error);
+    }
+  };
+
   useEffect(() => {
-    const checkSlots = async () => {
-      const username = localStorage.getItem('user');
-      if (!username) {
-        alert('User not found');
-        return;
-      }
-
-      try {
-        const response = await axios.get(`/local/freeslots/${username}`);
-        setAllInUse(response.data.allInUse);
-      } catch (error) {
-        console.error('Error checking slots:', error);
-      }
-    };
-
-    checkSlots();
+    checkSlots(); // Initial check for slots
   }, []);
 
   const handleSearch = async () => {
@@ -68,6 +68,7 @@ const AlbumSearch = () => {
       setConfirmationMessage('Album has been added to your collection!');
       setAlbums([]);
       setSearchTerm('');
+      await checkSlots(); // Check slots again after adding the album
     } catch (error) {
       console.error('Error adding album:', error);
     } finally {

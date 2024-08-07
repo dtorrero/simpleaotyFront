@@ -9,6 +9,7 @@ const AlbumSearch = () => {
   const [allInUse, setAllInUse] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state for search
   const [addingLoading, setAddingLoading] = useState({}); // Loading state for adding albums
+  const token = localStorage.getItem('token');
 
   const checkSlots = async () => {
     const username = localStorage.getItem('user');
@@ -64,7 +65,10 @@ const AlbumSearch = () => {
     setAddingLoading((prev) => ({ ...prev, [album.id]: true }));
 
     try {
-      await axios.post(`/local/users/${username}/albums`, albumData);
+      await axios.post(`/local/users/${username}/albums`, albumData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }});
       setConfirmationMessage('Album has been added to your collection!');
       setAlbums([]);
       setSearchTerm('');
@@ -94,7 +98,7 @@ const AlbumSearch = () => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown} 
+            onKeyDown={handleKeyDown}
             placeholder="Search for albums..."
             style={{ backgroundColor: 'black', color: 'white', border: '1px solid white', padding: '5px' }}
           />
@@ -111,8 +115,8 @@ const AlbumSearch = () => {
           {albums.map((album) => (
             <li key={album.id} className="album-item"> {/* Apply album-item class */}
               {album.title} by {album.band.name}
-              <button 
-                onClick={() => handleAddAlbum(album)} 
+              <button
+                onClick={() => handleAddAlbum(album)}
                 style={{ marginLeft: '10px', backgroundColor: 'black', color: 'white', border: '1px solid white', display: 'flex', alignItems: 'center' }}
                 disabled={addingLoading[album.id]} // Disable button while loading
               >

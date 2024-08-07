@@ -7,6 +7,7 @@ const VotedAlbumsPage = () => {
     const [loading, setLoading] = useState(true);
     const [isCompact, setIsCompact] = useState(false); // New state for compact view
     const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchVotedAlbums = async () => {
@@ -44,7 +45,10 @@ const VotedAlbumsPage = () => {
 
     const removeAlbum = async (albumId) => {
         try {
-            await axios.delete(`/local/users/${username}/albums/${albumId}`);
+            await axios.delete(`/local/users/${username}/albums/${albumId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }});
             setVotedAlbums(prevAlbums => prevAlbums.filter(album => album.id !== albumId));
             setAlbumDetails(prevDetails => prevDetails.filter((_, index) => votedAlbums[index].id !== albumId));
         } catch (error) {

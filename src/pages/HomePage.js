@@ -3,7 +3,12 @@ import axios from 'axios';
 
 const HomePage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
-    const [isCompact, setIsCompact] = useState(false); 
+    
+    
+    const [isCompact, setIsCompact] = useState(() => {
+        const listView = localStorage.getItem('isCompact');
+        return listView === 'true'; 
+    });
 
     useEffect(() => {
         const fetchVotedAlbums = async () => {
@@ -15,7 +20,11 @@ const HomePage = () => {
     }, []);
 
     const toggleCompactView = () => {
-        setIsCompact(prevState => !prevState); // Toggle view state
+        setIsCompact(prevState => {
+            const newState = !prevState; 
+            localStorage.setItem('isCompact', newState ? 'true' : 'false'); 
+            return newState; 
+        });
     };
 
     // Add global styles for the body and html

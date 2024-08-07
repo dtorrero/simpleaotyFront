@@ -5,7 +5,13 @@ const VotedAlbumsPage = () => {
     const [votedAlbums, setVotedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isCompact, setIsCompact] = useState(false); // New state for compact view
+    
+    // Initialize isCompact from localStorage, defaulting to false if not set
+    const [isCompact, setIsCompact] = useState(() => {
+        const listView = localStorage.getItem('isCompact');
+        return listView === 'true'; // Only 'true' will set isCompact to true
+    });
+
     const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -56,11 +62,19 @@ const VotedAlbumsPage = () => {
         }
     };
 
+    const toggleCompactView = () => {
+        setIsCompact(prevState => {
+            const newState = !prevState; // Toggle the state
+            localStorage.setItem('isCompact', newState ? 'true' : 'false'); // Save to localStorage
+            return newState; // Return the new state
+        });
+    };
+
     return (
         <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', padding: '20px' }}>
             <h1>Your Voted Albums ({votedAlbums.length} / 10)</h1>
             <button 
-                onClick={() => setIsCompact(prev => !prev)}
+                onClick={toggleCompactView}
                 style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
             >
                 {isCompact ? 'Show Full List' : 'Compact List'}

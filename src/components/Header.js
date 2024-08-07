@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext'; // Adjust the path as necessary
+import { useAuth } from '../AuthContext'; 
 import './Header.css';
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = () => {
-    logout(); // Call the logout function from context
+    logout(); 
   };
 
   return (

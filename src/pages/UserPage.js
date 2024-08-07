@@ -10,6 +10,7 @@ const AlbumSearch = () => {
   const [loading, setLoading] = useState(false); // Loading state for search
   const [addingLoading, setAddingLoading] = useState({}); // Loading state for adding albums
   const token = localStorage.getItem('token');
+  const listView = localStorage.getItem('view');
 
   const checkSlots = async () => {
     const username = localStorage.getItem('user');

@@ -23,10 +23,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.clear();
+    // Remove only the user and token Save the view state 
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+        
     setIsLoggedIn(false);
+    
     console.log("Logged Out");
-  };
+};
+
 
   // Prevent rendering children until loading is complete
   if (loading) {

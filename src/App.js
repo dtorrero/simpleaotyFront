@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import VotedAlbumsPage from './pages/VotedAlbumsPage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import NotFound from './pages/NotFound'; 
 import Header from './components/Header';
 import { AuthProvider } from './AuthContext'; 
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/user" element={<PrivateRoute element={<UserPage />} />} />
             <Route path="/voted-albums" element={<PrivateRoute element={<VotedAlbumsPage />} />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="*" element={<NotFound />} /> 
           </Routes>
         </div>

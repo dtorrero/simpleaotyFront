@@ -15,11 +15,11 @@ const AdminPage = () => {
 
   const handleGenerateLinks = async () => {
     try {
-      const response = await axios.get(`/local/generate-link/${user}/${amount}`, {
+      console.log()
+      const response = await axios.post(`/local/generate-link/${user}/${amount}`,{}, {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+          Authorization: `Bearer ${token}`
+        }});
       setLinks(response.data.links); 
       setError(''); 
     } catch (err) {

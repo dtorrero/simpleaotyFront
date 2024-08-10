@@ -16,10 +16,9 @@ const LoginPage = () => {
     setError('');
     try {
       const result = await axios.post('/local/login', { username, password });
-      localStorage.setItem('token', result.data.token);
-           
-      login(username, result.data.role);
-      
+      const { token, role } = result.data; // Assuming the response contains the token and role
+             
+      login(username, role, token); // Pass the token to the login function
       navigate('/voted-albums');
     } catch (error) {
       console.error('Error during login: (LoginPage)', error);

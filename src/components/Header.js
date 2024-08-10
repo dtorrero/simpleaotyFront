@@ -4,14 +4,13 @@ import { useAuth } from '../AuthContext';
 import './Header.css';
 
 const Header = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, role } = useAuth(); // Get role from useAuth
 
   const handleLogout = () => {
     logout(); 
   };
 
   const username = localStorage.getItem('user');
-  const role = localStorage.getItem('role');
 
   return (
     <header>
@@ -35,6 +34,11 @@ const Header = () => {
                   <li>
                     <Link to="/voted-albums">MyAlbums</Link>
                   </li>
+                  {role === 'admin' && ( // Show admin link if user is admin
+                    <li>
+                      <Link to="/admin">Admin</Link>
+                    </li>
+                  )}
                 </>
               )}
               <li>
@@ -55,3 +59,4 @@ const Header = () => {
 };
 
 export default Header;
+

@@ -4,43 +4,41 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
-    console.log('Checking auth state:', { user, token }); // Debugging log
+    const storedRole = localStorage.getItem('role');
     if (user && token) {
       setIsLoggedIn(true);
+      setRole(storedRole);
     }
-    setLoading(false); // Set loading to false after checking
+    setLoading(false);
   }, []);
 
-  const login = (username) => {
+  const login = (username, userRole) => {
     localStorage.setItem('user', username);
+    localStorage.setItem('role', userRole);
     setIsLoggedIn(true);
-    console.log("Logged In");
+    setRole(userRole);
   };
 
   const logout = () => {
-    // Remove only the user and token Save the view state 
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-        
     setIsLoggedIn(false);
-    
-    console.log("Logged Out");
-};
+    setRole(null);
+  };
 
-
-  // Prevent rendering children until loading is complete
   if (loading) {
-    return <div>Loading...</div>; // You can customize this loading indicator
+    return <div>Loading...</div>;
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, role, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -49,4 +47,3 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-

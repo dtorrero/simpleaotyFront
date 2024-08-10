@@ -17,11 +17,12 @@ const LoginPage = () => {
     try {
       const result = await axios.post('/local/login', { username, password });
       localStorage.setItem('token', result.data.token);
-      localStorage.setItem('role', result.data.role);
-      login(username);
+           
+      login(username, result.data.role);
+      
       navigate('/voted-albums');
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error('Error during login: (LoginPage)', error);
       setError('Invalid username or password.');
     }
   };

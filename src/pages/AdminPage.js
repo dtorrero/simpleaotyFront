@@ -82,12 +82,12 @@ const AdminPage = () => {
 
   useEffect(() => {
     fetchTokens(tokenStatus); 
-  }, []);
+  }, [tokenStatus]);
 
   return (
     <div>
       <h1>Admin Stuff</h1>
-      <p>Welcome :)</p>
+      <p>Welcome ¯\_(ツ)_/¯</p>
       <div>
         <label>
           Amount of links to generate:
@@ -127,6 +127,7 @@ const AdminPage = () => {
             tokens.map((token) => (
               <div key={token.token} style={{ display: 'flex', justifyContent: 'center', margin: '5px 0' }}>
                 <span>{token.token} (Used: {token.used === 0 ? 'No' : 'Yes'})</span>
+                <span style={{ marginLeft: '10px', fontStyle: 'italic', color: '#555' }}>Created At: {token.createdAt}</span>
               </div>
             ))
           ) : (

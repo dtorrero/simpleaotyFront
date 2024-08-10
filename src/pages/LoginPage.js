@@ -17,6 +17,7 @@ const LoginPage = () => {
     try {
       const result = await axios.post('/local/login', { username, password });
       localStorage.setItem('token', result.data.token);
+      localStorage.setItem('role', result.data.role);
       login(username);
       navigate('/voted-albums');
     } catch (error) {

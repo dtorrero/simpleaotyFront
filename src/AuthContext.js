@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     // Remove only the user and token Save the view state 
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
         
     setIsLoggedIn(false);
     

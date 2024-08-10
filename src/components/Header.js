@@ -10,33 +10,45 @@ const Header = () => {
     logout(); 
   };
 
+  const username = localStorage.getItem('user');
+  const role = localStorage.getItem('role');
+
   return (
     <header>
       <nav>
-        <ul>
-          <li>
-            <Link to="/">AOTY2024</Link>
-          </li>
+        <div className="header-content">
           {isLoggedIn && (
-            <>
-              <li>
-                <Link to="/user">Vote!</Link>
-              </li>
-              <li>
-                <Link to="/voted-albums">MyAlbums</Link>
-              </li>
-            </>
+            <span className="user-info">
+              {username} {role === 'admin' && '(admin)'}
+            </span>
           )}
-          <li>
-            {isLoggedIn ? (
-              <Link to="/" onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                Logout
-              </Link>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
-          </li>
-        </ul>
+          <div className="nav-links-container">
+            <ul className="nav-links">
+              <li>
+                <Link to="/">AOTY2024</Link>
+              </li>
+              {isLoggedIn && (
+                <>
+                  <li>
+                    <Link to="/user">Vote!</Link>
+                  </li>
+                  <li>
+                    <Link to="/voted-albums">MyAlbums</Link>
+                  </li>
+                </>
+              )}
+              <li>
+                {isLoggedIn ? (
+                  <Link to="/" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                    Logout
+                  </Link>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
     </header>
   );

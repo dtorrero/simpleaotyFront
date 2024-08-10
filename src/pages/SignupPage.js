@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import './SignupPage.css'; 
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
-
+  const navigate = useNavigate();
   const { logout } = useAuth();
   logout();
 
@@ -28,6 +29,7 @@ const SignupPage = () => {
       console.log(url);
       const response = await axios.post(url, { username, password });
       console.log('Signup successful:', response.data);
+      navigate('/login');
     } catch (error) {
       console.error('Error during signup:', error);
     }

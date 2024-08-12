@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute'; 
 import AdminPage from './pages/AdminPage'; 
 import './App.css';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/admin" element={<AdminRoute element={<AdminPage />} />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
+            <Route path="/passw" element={<ChangePasswordPage />} />
             <Route path="*" element={<NotFound />} /> 
           </Routes>
         </div>

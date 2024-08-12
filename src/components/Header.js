@@ -4,7 +4,7 @@ import { useAuth } from '../AuthContext';
 import './Header.css';
 
 const Header = () => {
-  const { isLoggedIn, logout, role } = useAuth(); // Get role from useAuth
+  const { isLoggedIn, logout, role } = useAuth(); 
 
   const handleLogout = () => {
     logout(); 
@@ -18,7 +18,9 @@ const Header = () => {
         <div className="header-content">
           {isLoggedIn && (
             <span className="user-info">
-              {username} {role === 'admin' && '(admin)'}
+              <Link to="/passw" style={{ textDecoration: 'none', color: 'inherit' }}>
+                {username} {role === 'admin' && '(admin)'}
+              </Link>
             </span>
           )}
           <div className="nav-links-container">
@@ -59,4 +61,3 @@ const Header = () => {
 };
 
 export default Header;
-

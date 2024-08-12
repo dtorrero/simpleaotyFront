@@ -41,6 +41,11 @@ const Header = () => {
                       <Link to="/admin">Admin</Link>
                     </li>
                   )}
+                  {(role === 'SUPERADMIN')&& ( 
+                    <li>
+                      <Link to="/roles">GiveRoles</Link>
+                    </li>
+                  )}
                 </>
               )}
               <li>

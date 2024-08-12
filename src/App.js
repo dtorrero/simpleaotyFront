@@ -10,7 +10,9 @@ import Header from './components/Header';
 import { AuthProvider } from './AuthContext'; 
 import PrivateRoute from './components/PrivateRoute'; 
 import AdminRoute from './components/AdminRoute'; 
+import RadminRoute from './components/RadminRoute'; 
 import AdminPage from './pages/AdminPage'; 
+import RolesPage from './pages/RolesPage'; 
 import './App.css';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 
@@ -25,6 +27,7 @@ const App = () => {
             <Route path="/user" element={<PrivateRoute element={<UserPage />} />} />
             <Route path="/voted-albums" element={<PrivateRoute element={<VotedAlbumsPage />} />} />
             <Route path="/admin" element={<AdminRoute element={<AdminPage />} />} />
+            <Route path="/roles" element={<RadminRoute element={<RolesPage />} />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/passw" element={<ChangePasswordPage />} />

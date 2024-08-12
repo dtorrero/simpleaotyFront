@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 
-const AdminRoute = ({ element }) => {
+const RAdminRoute = ({ element }) => {
   const { isLoggedIn, role } = useAuth();
   
   if (!isLoggedIn || role !== "SUPERADMIN") {
@@ -12,4 +12,4 @@ const AdminRoute = ({ element }) => {
   return element;
 };
 
-export default AdminRoute;
+export default RAdminRoute;

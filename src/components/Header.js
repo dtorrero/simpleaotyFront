@@ -23,41 +23,43 @@ const Header = () => {
               </Link>
             </span>
           )}
-          <div className="nav-links-container">
-            <ul className="nav-links">
-              <li>
-                <Link to="/">AOTY2024</Link>
-              </li>
-              {isLoggedIn && (
-                <>
-                  <li>
-                    <Link to="/user">Vote!</Link>
-                  </li>
-                  <li>
-                    <Link to="/voted-albums">MyAlbums</Link>
-                  </li>
-                  {(role === 'admin' || role === 'SUPERADMIN')&& ( 
+          
+            <div className="nav-links-container">
+              <ul className="nav-links">
+                <li>
+                  <Link to="/">AOTY2024</Link>
+                </li>
+                {isLoggedIn && (
+                  <>
                     <li>
-                      <Link to="/admin">Admin</Link>
+                      <Link to="/user">Vote!</Link>
                     </li>
-                  )}
-                  {(role === 'SUPERADMIN')&& ( 
                     <li>
-                      <Link to="/roles">GiveRoles</Link>
+                      <Link to="/voted-albums">MyAlbums</Link>
                     </li>
-                  )}
-                </>
-              )}
-              <li>
-                {isLoggedIn ? (
-                  <Link to="/" onClick={handleLogout} style={{ cursor: 'pointer' }}>
-                    Logout
-                  </Link>
-                ) : (
-                  <Link to="/login">Login</Link>
+                    {(role === 'admin' || role === 'SUPERADMIN') && (
+                      <li>
+                        <Link to="/admin">Admin</Link>
+                      </li>
+                    )}
+                    {(role === 'SUPERADMIN') && (
+                      <li>
+                        <Link to="/roles">GiveRoles</Link>
+                      </li>
+                    )}
+                  </>
                 )}
-              </li>
-            </ul>
+                <li>
+                  {isLoggedIn ? (
+                    <Link to="/" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+                      Logout
+                    </Link>
+                  ) : (
+                    <Link to="/login">Login</Link>
+                  )}
+                </li>
+              </ul>
+            
           </div>
         </div>
       </nav>

@@ -39,7 +39,7 @@ const HomePage = () => {
         <div style={{ padding: '20px' }}>
             <h1>AOTY 2024 Rankings</h1>
             <button onClick={toggleCompactView} style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#444', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                {isCompact ? 'Show Full List' : 'Show Compact List'}
+                {isCompact ? 'Show Details' : 'Show Compact List'}
             </button>
             {votedAlbums.map((album, index) => (
                 <div 

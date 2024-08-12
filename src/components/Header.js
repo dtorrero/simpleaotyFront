@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext'; 
+import { useAuth } from '../AuthContext';
 import './Header.css';
 
 const Header = () => {
-  const { isLoggedIn, logout, role } = useAuth(); 
+  const { isLoggedIn, logout, role } = useAuth();
 
   const handleLogout = () => {
-    logout(); 
+    logout();
   };
 
   const username = localStorage.getItem('user');
@@ -19,7 +19,7 @@ const Header = () => {
           {isLoggedIn && (
             <span className="user-info">
               <Link to="/passw" style={{ textDecoration: 'none', color: 'inherit' }}>
-                {username} {role === 'admin' && '(admin)'}
+                {username} {(role === 'admin' || role === 'SUPERADMIN') && `(${role.toLowerCase()})`}
               </Link>
             </span>
           )}
@@ -36,7 +36,7 @@ const Header = () => {
                   <li>
                     <Link to="/voted-albums">MyAlbums</Link>
                   </li>
-                  {role === 'admin' && ( // Show admin link if user is admin
+                  {(role === 'admin' || role === 'SUPERADMIN')&& ( 
                     <li>
                       <Link to="/admin">Admin</Link>
                     </li>

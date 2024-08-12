@@ -4,8 +4,8 @@ import { useAuth } from '../AuthContext';
 
 const AdminRoute = ({ element }) => {
   const { isLoggedIn, role } = useAuth();
-
-  if (!isLoggedIn || role !== 'admin') {
+  
+  if (!isLoggedIn || role !== 'admin' && role !== "SUPERADMIN") {
     return <Navigate to="/" />; // Redirect to home if not admin
   }
 

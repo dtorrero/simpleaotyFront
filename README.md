@@ -1,9 +1,11 @@
 # simpleAOTYFront
 Simple front for AOTY web in JS REACT 
 
+Use docker-compose or docker compose. 
+
+This includes the backend. 
+
 **compose.yaml**
-
-
 
 ```
 services:
@@ -26,3 +28,5 @@ services:
       - SECRET=your_secret
       - FRURL=http://yourfrontend:3000 
 ``` 
+
+`docker-compose up' 

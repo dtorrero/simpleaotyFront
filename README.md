@@ -3,7 +3,7 @@ Simple front for AOTY web in JS REACT
 
 **compose.yaml**
 
-Change the needed 
+
 
 ```
 services:

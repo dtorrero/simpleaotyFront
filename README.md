@@ -29,4 +29,4 @@ services:
       - FRURL=http://yourfrontend:3000 
 ``` 
 
-`docker-compose up' 
+`docker-compose up` 

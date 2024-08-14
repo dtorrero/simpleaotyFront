@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const backend = process.env.BACKEND;
+const backend = process.env.REACT_APP_BACKEND;
 module.exports = function(app) {
   // Proxy for /local
   app.use(
